@@ -1,30 +1,14 @@
-#include "Header.hpp"
-#include <fstream>
-#include <dirent.h>
-#include <iostream>
+#include "Utilities.hpp"
 
-Utilities::Utilities()
+//List
+void Utilities::list_dir(std::string dir)
 {
-}
-
-Utilities::~Utilities()
-{
-}
-
-void list_dir(std::string dir)
-{
-	DIR* directorio;
-	struct dirent* elem;
-	std::string elem1;
-	std::fstream file;
-	std::string rdString;
-
-	if (directorio = opendir(dir.c_str()))
+	if(directorio = opendir(dir.c_str()))
 	{
 		while (elem = readdir(directorio))
 		{
 			elem1 = elem->d_name;
-			
+
 			if (elem1 != "." && elem1 != "..")
 			{
 				std::cout << elem1 << std::endl;
@@ -46,11 +30,11 @@ void list_dir(std::string dir)
 	closedir(directorio);
 }
 
-void init()
+//Initialization
+void Utilities::init()
 {
 	std::string dir;
 
-	//Directory of the folder models
-	dir = "C:\Users\jose_\Desktop\GitHub\Asteroids\models";
+	dir = "C:/Users/jose_/Desktop/GitHub/Asteroids/models";
 	list_dir(dir.c_str());
 }

@@ -9,13 +9,19 @@
 
 // 
 #include "App.hpp"
-#include "Header.hpp"
+
+//WhatIUsed
+#include "Utilities.hpp"
 
 const int WIDTH = 1136;
 const int HEIGHT = 640;
 
 int main(int argc, char* argv[])
 {
+	
+	Utilities utilityClass;
+	utilityClass.init();
+
 #if _MSC_VER && _DEBUG
 	// https://msdn.microsoft.com/en-us/library/x98tx3cf.aspx
 	// This will help you detect leaks when using Visual C++
