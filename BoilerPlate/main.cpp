@@ -9,6 +9,7 @@
 
 // 
 #include "App.hpp"
+#include "Header.hpp"
 
 const int WIDTH = 1136;
 const int HEIGHT = 640;

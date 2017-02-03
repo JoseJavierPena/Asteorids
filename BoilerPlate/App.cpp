@@ -127,11 +127,10 @@ namespace Engine
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_LINE_LOOP);
-		glVertex2f(50.0, 50.0);
-		glVertex2f(50.0, -50.0);
-		glVertex2f(-50.0, -50.0);
-		glVertex2f(-50.0, 50.0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glVertex2f(1.0f, 1.5f);
+		glVertex2f(1.5f, -1.5f);
+		glVertex2f(-1.5f, -1.5f);
 		glEnd();
 
 		SDL_GL_SwapWindow(m_mainWindow);
