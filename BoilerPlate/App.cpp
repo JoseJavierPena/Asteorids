@@ -6,10 +6,15 @@
 #include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
 
+//
+#include "utilities.hpp"
+#include "Load.h"
+
 namespace Engine
 {
 	const float DESIRED_FRAME_RATE = 60.0f;
 	const float DESIRED_FRAME_TIME = 1.0f / DESIRED_FRAME_RATE;
+	bool stop = true;
 
 	App::App(const std::string& title, const int width, const int height)
 		: m_title(title)
@@ -19,12 +24,16 @@ namespace Engine
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
 	{
+		m_game = new AsteroidsGame::Game(width, height);
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 	}
 
 	App::~App()
 	{
+		//Eliminating pointer to game
+		delete m_game;
+
 		CleanupSDL();
 	}
 
@@ -73,15 +82,47 @@ namespace Engine
 		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
+		//Game initialization
+		m_game->init();
+
+		//Prints
+		std::cout << "Frame Rate: " << DESIRED_FRAME_RATE << " FPS" << std::endl;
+
 		return true;
 	}
 
 	void App::OnKeyDown(SDL_KeyboardEvent keyBoardEvent)
-	{		
+	{
 		switch (keyBoardEvent.keysym.scancode)
 		{
-		default:			
-			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
+		case SDL_SCANCODE_W:
+			m_game->m_ship[m_game->m_playerIndex]->MoveUp();
+			break;
+		case SDL_SCANCODE_A:
+			m_game->m_ship[m_game->m_playerIndex]->RotateLeft();
+			break;
+		case SDL_SCANCODE_S:
+			//NOTHING
+			break;
+		case SDL_SCANCODE_D:
+			m_game->m_ship[m_game->m_playerIndex]->RotateRight();
+			break;
+		case SDL_SCANCODE_UP:
+			break;
+		case SDL_SCANCODE_LEFT:
+			break;
+		case SDL_SCANCODE_RIGHT:
+			break;
+		case SDL_SCANCODE_DOWN:
+			break;
+		case SDL_SCANCODE_SPACE:
+			m_game->m_ship[m_game->m_playerIndex]->Shoot();
+			break;
+		case SDL_SCANCODE_P:
+			//Do nothing
+			break;
+		default:
+			SDL_Log("Not binded key.", keyBoardEvent.keysym.scancode);
 			break;
 		}
 	}
@@ -90,6 +131,25 @@ namespace Engine
 	{
 		switch (keyBoardEvent.keysym.scancode)
 		{
+		case SDL_SCANCODE_W:
+			break;
+		case SDL_SCANCODE_A:
+			break;
+		case SDL_SCANCODE_S:
+			break;
+		case SDL_SCANCODE_D:
+			break;
+		case SDL_SCANCODE_P:
+			m_game->m_playerIndex++;
+			break;
+		case SDL_SCANCODE_UP:
+			break;
+		case SDL_SCANCODE_LEFT:
+			break;
+		case SDL_SCANCODE_DOWN:
+			break;
+		case SDL_SCANCODE_RIGHT:
+			break;
 		case SDL_SCANCODE_ESCAPE:
 			OnExit();
 			break;
@@ -105,17 +165,17 @@ namespace Engine
 
 		// Update code goes here
 		//
+		m_game->Update(DESIRED_FRAME_RATE);
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
-
 		while (endTime < nextTimeFrame)
 		{
 			// Spin lock
 			endTime = m_timer->GetElapsedTimeInSeconds();
 		}
 
-		//double elapsedTime = endTime - startTime;        
+		double elapsedTime = endTime - startTime;
 
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 
@@ -127,13 +187,7 @@ namespace Engine
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_LINE_LOOP);
-		glVertex2f(50.0, 50.0);
-		glVertex2f(50.0, -50.0);
-		glVertex2f(-50.0, -50.0);
-		glVertex2f(-50.0, -50.0);
-		glEnd();
-
+		m_game->Render();
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
 
@@ -150,9 +204,9 @@ namespace Engine
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-		Uint32 flags =  SDL_WINDOW_OPENGL     | 
-						SDL_WINDOW_SHOWN      | 
-						SDL_WINDOW_RESIZABLE;
+		Uint32 flags = SDL_WINDOW_OPENGL |
+			SDL_WINDOW_SHOWN |
+			SDL_WINDOW_RESIZABLE;
 
 		m_mainWindow = SDL_CreateWindow(
 			m_title.c_str(),

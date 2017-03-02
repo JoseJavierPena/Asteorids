@@ -172,35 +172,38 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SDLEvent.cpp" />
+    <ClCompile Include="ship.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="UtilitiesSource.cpp" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
+    <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="dirent.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Load.h" />
+    <ClInclude Include="Physic.h" />
     <ClInclude Include="SDLEvent.hpp" />
+    <ClInclude Include="ship.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="TimeManager.hpp" />
-    <ClInclude Include="Utilities.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClInclude Include="utilities.hpp" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="..\packages\wastorage.v120.2.6.0\build\native\wastorage.v120.targets" Condition="Exists('..\packages\wastorage.v120.2.6.0\build\native\wastorage.v120.targets')" />
-    <Import Project="..\packages\wastorage.v140.2.6.0\build\native\wastorage.v140.targets" Condition="Exists('..\packages\wastorage.v140.2.6.0\build\native\wastorage.v140.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
-    <Error Condition="!Exists('..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
-    <Error Condition="!Exists('..\packages\wastorage.v120.2.6.0\build\native\wastorage.v120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\wastorage.v120.2.6.0\build\native\wastorage.v120.targets'))" />
-    <Error Condition="!Exists('..\packages\wastorage.v140.2.6.0\build\native\wastorage.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\wastorage.v140.2.6.0\build\native\wastorage.v140.targets'))" />
-  </Target>
 </Project>

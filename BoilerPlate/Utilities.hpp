@@ -1,34 +1,34 @@
 #pragma once
+#ifndef _UTILITIES_
+#define _UTILITIES_
 
-#ifndef HEADER_H_INCLUDED
-
-#define HEADER_H_INCLUDED
-
-//C++
-#include "App.hpp"
 #include <iostream>
-#include <fstream>
-#include "Utilities.hpp"
-#include <stdio.h>
-#include <tchar.h>
 #include <Windows.h>
-#include <dirent.h>
 #include <vector>
+#include <string>
+#include <fstream>
 
-class Utilities
+namespace Engine
 {
-public:
-	void list_dir(std::string dir);
-	void init();
+	namespace FileSystem
+	{
+		class Utilities
+		{
+		public:
+			//Functions
+			std::vector<std::string> ListFile(std::string file);
+			void printUtility(std::vector<std::string> list);
+			std::string buildPath(std::string param1, std::string param2);
 
-private:
-	DIR* directorio;
-	struct dirent* elem;
-	std::string elem1;
-	std::fstream file;
-	std::string rdString;
+		protected:
+			//Functions
+			std::string getPath(std::string file);
+			void printFileContent(std::string fileName);
 
-};
+			//Members
+			std::vector<std::string> list_of_files;
+		};
+	}
+}
 
-
-#endif // !HEADER_H_INCLUDED
+#endif // !_UTILITIES_
